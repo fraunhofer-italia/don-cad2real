@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta
+    name="description"
+    content="Project page for Efficient Adaptation of Dense Object Descriptors with application to CAD-to-Real Robotic Grasping">
+
+  <title>Efficient Adaptation of Dense Object Descriptors</title>
+
+  <link rel="stylesheet" href="./static/css/style.css">
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+
+  <main>
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container narrow center">
+
+        <h1>
+          Efficient Adaptation of Dense Object Descriptors with application to
+          CAD-to-Real Robotic Grasping
+        </h1>
+
+        <p class="authors">
+          Francesco Visentin<sup>1,2</sup>,
+          Andrea Giusti<sup>2</sup>,
+          Dominik T. Matt<sup>1,2</sup>,<br>
+          Walburga Kerschbaumer<sup>2</sup> and Marco Todescato<sup>1</sup>
+        </p>
+
+        <p class="affiliations">
+          <span><sup>1</sup> Fraunhofer Italia Research Scarl, <sup>2</sup> Free University of Bozen-Bolzano</span>
+        </p>
+
+        <p class="venue">IEEE Robotics and Automation Letters</p>
+
+        <div class="buttons">
+          <a
+            class="button"
+            href="https://github.com/fraunhofer-italia/don-cad2real"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <i class="fab fa-github"></i>
+            <span>Code</span>
+          </a>
+
+          <a class="button" href="#bibtex">
+            <i class="fas fa-quote-right"></i>
+            <span>BibTeX</span>
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- Abstract -->
+    <section class="section">
+      <div class="container narrow center">
+
+        <h2>Abstract</h2>
+
+        <p>
+          Dense visual descriptors have become a useful object-centric
+          representation for robotic manipulation, as they allow object points,
+          parts, and targets to be matched across different viewpoints and
+          object poses, in both empty and cluttered scenes. However, learning
+          accurate descriptors typically depends on dense correspondence
+          supervision, which is expensive to obtain from real data, while models
+          trained only in simulation often suffer from a sim-to-real gap. We
+          propose an improved Dense Object Nets training pipeline designed to
+          leverage synthetic pretraining and support real-world deployment with
+          minimal annotation effort. The pipeline combines a contrastive pixel-
+          and instance-level loss, triplet-based sample construction,
+          self-matching on real images, and domain-adversarial alignment.
+          Starting from CAD-generated synthetic data, the model is fine-tuned
+          using only a small set of real images, without requiring real
+          object-pose supervision. Experiments on YCB-V and T-LESS evaluate the
+          proposed design and compare the resulting descriptors against recent
+          pretrained visual encoders. Results show that, while large
+          general-purpose encoders are strong for coarse correspondence on
+          common objects, compact specialized DONs remain competitive for
+          accurate matching and less common object domains. Real-world
+          bin-picking experiments further show that the proposed self-matching
+          and domain-adversarial based adaptation improves CAD-to-real keypoint
+          localization and grasp execution compared with synthetic-only
+          training.
+        </p>
+
+      </div>
+    </section>
+
+
+    <!-- Main Video -->
+    <section class="section alt">
+      <div class="container">
+
+        <div class="media-frame main-video">
+          <video
+            controls
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="metadata"
+            aria-label="DON grasping video">
+
+            <source
+              src="./static/videos/don_grasping_video.mp4"
+              type="video/mp4">
+          </video>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- Additional Material -->
+    <section class="section">
+      <div class="container">
+
+        <h2>Additional Material</h2>
+
+
+        <!-- CAD-to-Real Videos -->
+        <h3>CAD-to-Real Descriptors Matching Experiments</h3>
+
+        <div class="video-grid">
+
+          <div class="video-item">
+            <div class="media-frame">
+              <video
+                controls
+                autoplay
+                muted
+                loop
+                playsinline
+                preload="metadata"
+                aria-label="Points matching experiment">
+
+                <source
+                  src="./static/videos/points_matching.mp4"
+                  type="video/mp4">
+              </video>
+            </div>
+
+            <div class="video-title">
+              Points matching
+            </div>
+          </div>
+
+
+          <div class="video-item">
+            <div class="media-frame">
+              <video
+                controls
+                autoplay
+                muted
+                loop
+                playsinline
+                preload="metadata"
+                aria-label="Grasps matching experiment">
+
+                <source
+                  src="./static/videos/grasps_matching.mp4"
+                  type="video/mp4">
+              </video>
+            </div>
+
+            <div class="video-title">
+              Grasps matching
+            </div>
+          </div>
+
+
+          <div class="video-item">
+            <div class="media-frame">
+              <video
+                controls
+                autoplay
+                muted
+                loop
+                playsinline
+                preload="metadata"
+                aria-label="Pose detection experiment">
+
+                <source
+                  src="./static/videos/pose_detection.mp4"
+                  type="video/mp4">
+              </video>
+            </div>
+
+            <div class="video-title">
+              Pose detection
+            </div>
+          </div>
+
+        </div>
+
+
+        <!-- Loss Ablation -->
+        <h3>Losses Ablation - PCK@t median values comparison</h3>
+
+
+        <!-- YCB-V -->
+        <h4 class="plot-section-title">YCB-V</h4>
+
+        <div class="plot-grid">
+
+          <div class="plot-item">
+            <div class="plot-wrapper">
+
+              <iframe
+                class="plot-frame"
+                src="./static/plots/pck_ycbv_real.html"
+                loading="lazy"
+                title="YCB-V Real PCK">
+              </iframe>
+
+              <button
+                class="plot-expand"
+                type="button"
+                onclick="openPlot(
+                  './static/plots/pck_ycbv_real.html',
+                  'YCB-V — Real'
+                )"
+                aria-label="Expand YCB-V Real plot">
+
+                <i class="fa-solid fa-expand"></i>
+              </button>
+
+            </div>
+
+            <div class="plot-title">
+              Real
+            </div>
+          </div>
+
+
+          <div class="plot-item">
+            <div class="plot-wrapper">
+
+              <iframe
+                class="plot-frame"
+                src="./static/plots/pck_ycbv_synth.html"
+                loading="lazy"
+                title="YCB-V Synthetic PCK">
+              </iframe>
+
+              <button
+                class="plot-expand"
+                type="button"
+                onclick="openPlot(
+                  './static/plots/pck_ycbv_synth.html',
+                  'YCB-V — Synthetic'
+                )"
+                aria-label="Expand YCB-V Synthetic plot">
+
+                <i class="fa-solid fa-expand"></i>
+              </button>
+
+            </div>
+
+            <div class="plot-title">
+              Synthetic
+            </div>
+          </div>
+
+        </div>
+
+
+        <!-- T-LESS -->
+        <h4 class="plot-section-title">T-LESS</h4>
+
+        <div class="plot-grid">
+
+          <div class="plot-item">
+            <div class="plot-wrapper">
+
+              <iframe
+                class="plot-frame"
+                src="./static/plots/pck_tless_real.html"
+                loading="lazy"
+                title="T-LESS Real PCK">
+              </iframe>
+
+              <button
+                class="plot-expand"
+                type="button"
+                onclick="openPlot(
+                  './static/plots/pck_tless_real.html',
+                  'T-LESS — Real'
+                )"
+                aria-label="Expand T-LESS Real plot">
+
+                <i class="fa-solid fa-expand"></i>
+              </button>
+
+            </div>
+
+            <div class="plot-title">
+              Real
+            </div>
+          </div>
+
+
+          <div class="plot-item">
+            <div class="plot-wrapper">
+
+              <iframe
+                class="plot-frame"
+                src="./static/plots/pck_tless_synth.html"
+                loading="lazy"
+                title="T-LESS Synthetic PCK">
+              </iframe>
+
+              <button
+                class="plot-expand"
+                type="button"
+                onclick="openPlot(
+                  './static/plots/pck_tless_synth.html',
+                  'T-LESS — Synthetic'
+                )"
+                aria-label="Expand T-LESS Synthetic plot">
+
+                <i class="fa-solid fa-expand"></i>
+              </button>
+
+            </div>
+
+            <div class="plot-title">
+              Synthetic
+            </div>
+          </div>
+
+        </div>
+
+
+        <!-- Sim-to-Real Adaptation -->
+        <h3>
+          Sim-to-Real Adaptations - Evaluation Metrics Box-Plots comparison
+        </h3>
+
+        <div class="metric-grid">
+
+          <div class="plot-item metric-plot">
+            <h4 class="plot-section-title">YCB-V</h4>
+            <div class="plot-wrapper">
+
+              <iframe
+                class="plot-frame metric-frame"
+                src="./static/plots/s2r_box_ycbv.html"
+                title="YCB-V Sim-to-Real Adaptations Evaluation">
+              </iframe>
+
+              <button
+                class="plot-expand"
+                type="button"
+                onclick="openPlot(
+                  './static/plots/s2r_box_ycbv.html',
+                  'Sim-to-Real Adaptations Evaluation — YCB-V'
+                )"
+                aria-label="Expand YCB-V Sim-to-Real Adaptations plot">
+
+                <i class="fa-solid fa-expand"></i>
+              </button>
+
+            </div>
+          </div>
+
+          
+          <div class="plot-item metric-plot">
+            <h4 class="plot-section-title">T-LESS</h4>
+            <div class="plot-wrapper">
+
+              <iframe
+                class="plot-frame metric-frame"
+                src="./static/plots/s2r_box_tless.html"
+                title="T-LESS Sim-to-Real Adaptations Evaluation">
+              </iframe>
+
+              <button
+                class="plot-expand"
+                type="button"
+                onclick="openPlot(
+                  './static/plots/s2r_box_tless.html',
+                  'Sim-to-Real Adaptations Evaluation — T-LESS'
+                )"
+                aria-label="Expand T-LESS Sim-to-Real Adaptations plot">
+
+                <i class="fa-solid fa-expand"></i>
+              </button>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <section class="bibtex-section" id="bibtex">
+    <div class="container narrow">
+
+      <h2>BibTeX</h2>
+
+      <pre><code>@article{visentin2026efficient,
+    title   = {Efficient Adaptation of Dense Object Descriptors with Application to CAD-to-Real Robotic Grasping},
+    author  = {Visentin, Francesco and Giusti, Andrea and Matt, Dominik T. and Kerschbaumer, Walburga and Todescato, Marco},
+    journal = {IEEE Robotics and Automation Letters},
+    year    = {2026}
+}</code></pre>
+
+    </div>
+  </section>
+
+
+  <!-- Footer -->
+  <footer>
+    <div class="container narrow center">
+      <p>
+        Website layout inspired by the
+        <a href="https://github.com/nerfies/nerfies.github.io">
+          Nerfies
+        </a>
+        project page.
+      </p>
+    </div>
+  </footer>
+
+
+  <!-- Expanded Plot Dialog -->
+  <dialog
+    id="plot-dialog"
+    onclick="handleDialogClick(event)">
+
+    <div class="plot-dialog-header">
+
+      <span id="plot-dialog-title"></span>
+
+      <button
+        type="button"
+        onclick="closePlot()"
+        aria-label="Close expanded plot">
+
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+    </div>
+
+    <iframe
+      id="plot-dialog-frame"
+      title="Expanded interactive plot">
+    </iframe>
+
+  </dialog>
+
+
+  <script>
+    const plotDialog = document.getElementById("plot-dialog");
+    const plotDialogFrame = document.getElementById("plot-dialog-frame");
+    const plotDialogTitle = document.getElementById("plot-dialog-title");
+
+
+    function resizePlotIframe(iframe) {
+      try {
+        const iframeWindow = iframe.contentWindow;
+        const iframeDocument = iframe.contentDocument;
+
+        if (!iframeWindow || !iframeDocument || !iframeWindow.Plotly) {
+          return;
+        }
+
+        const activePlots = iframeDocument.querySelectorAll(
+          ".content.active .plotly-graph-div"
+        );
+
+        const plots = activePlots.length
+          ? activePlots
+          : iframeDocument.querySelectorAll(".plotly-graph-div");
+
+        plots.forEach((plot) => {
+          iframeWindow.Plotly.Plots.resize(plot);
+        });
+      }
+      catch (error) {
+        /*
+         * Ignore cross-origin or not-yet-ready iframe errors.
+         * Local ./static/plots files are same-origin when served normally.
+         */
+      }
+    }
+
+
+    function scheduleIframeResize(iframe) {
+      requestAnimationFrame(() => {
+        resizePlotIframe(iframe);
+      });
+
+      setTimeout(() => {
+        resizePlotIframe(iframe);
+      }, 100);
+
+      setTimeout(() => {
+        resizePlotIframe(iframe);
+      }, 500);
+    }
+
+
+    document.querySelectorAll(".plot-frame").forEach((iframe) => {
+
+      iframe.addEventListener("load", () => {
+        scheduleIframeResize(iframe);
+      });
+
+      const observer = new ResizeObserver(() => {
+        scheduleIframeResize(iframe);
+      });
+
+      observer.observe(iframe);
+    });
+
+
+    function openPlot(src, title) {
+      plotDialogFrame.src = src;
+      plotDialogTitle.textContent = title;
+
+      plotDialog.showModal();
+    }
+
+
+    function closePlot() {
+      plotDialog.close();
+    }
+
+
+    function handleDialogClick(event) {
+      if (event.target === plotDialog) {
+        closePlot();
+      }
+    }
+
+
+    plotDialogFrame.addEventListener("load", () => {
+      scheduleIframeResize(plotDialogFrame);
+    });
+
+
+    plotDialog.addEventListener("close", () => {
+      plotDialogFrame.src = "";
+    });
+  </script>
+
+</body>
+</html>
+```

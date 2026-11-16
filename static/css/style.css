@@ -1,0 +1,512 @@
+:root {
+  --bg: #ffffff;
+  --text: #1f2937;
+  --muted: #6b7280;
+  --line: #e5e7eb;
+  --soft: #f8fafc;
+  --button: #111827;
+}
+
+
+/* =========================================================
+   Base
+   ========================================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.6;
+
+  color: var(--text);
+  background: var(--bg);
+}
+
+.container {
+  width: min(1100px, calc(100% - 40px));
+  margin: 0 auto;
+}
+
+.narrow {
+  max-width: 850px;
+}
+
+.center {
+  text-align: center;
+}
+
+
+/* =========================================================
+   Typography
+   ========================================================= */
+
+h1 {
+  margin: 0 0 20px;
+
+  font-size: clamp(2rem, 5vw, 3.6rem);
+  line-height: 1.15;
+}
+
+h2 {
+  margin: 0 0 24px;
+
+  font-size: 2rem;
+  text-align: center;
+}
+
+h3 {
+  margin: 46px 0 20px;
+
+  font-size: 1.35rem;
+}
+
+h4 {
+  margin: 28px 0 14px;
+}
+
+.authors,
+.venue {
+  margin: 6px 0;
+  color: var(--muted);
+
+}
+
+.authors {
+  font-size: 1.25rem;
+}
+
+.venue {
+  font-size: 1.15rem;
+}
+
+
+/* =========================================================
+   Sections
+   ========================================================= */
+
+.hero {
+  padding: 80px 0 50px;
+  border-bottom: 1px solid var(--line);
+}
+
+.section {
+  padding: 64px 0;
+}
+
+.section.alt {
+  background: var(--soft);
+}
+
+
+/* =========================================================
+   Buttons
+   ========================================================= */
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 8px;
+
+  padding: 10px 18px;
+
+  border: 0;
+  border-radius: 999px;
+
+  color: #ffffff;
+  background: var(--button);
+
+  font: inherit;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   Video
+   ========================================================= */
+
+.media-frame {
+  width: 100%;
+}
+
+.main-video {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+video {
+  display: block;
+
+  width: 100%;
+  height: auto;
+
+  border-radius: 12px;
+
+  background: #000000;
+
+  box-shadow:
+    0 2px 15px rgba(0, 0, 0, 0.08);
+}
+
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.video-item {
+  min-width: 0;
+}
+
+.video-item:last-child {
+  grid-column: 1 / -1;
+  width: calc(50% - 8px);
+  justify-self: center;
+}
+
+@media (max-width: 768px) {
+  .video-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .video-item:last-child {
+    grid-column: auto;
+    width: 100%;
+  }
+}
+.video-title {
+  margin-top: 8px;
+
+  text-align: center;
+  font-weight: 550;
+}
+
+
+/* =========================================================
+   Plot grids
+   ========================================================= */
+
+/* Compact plots: 2 per row */
+.plot-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 24px;
+
+  margin-bottom: 32px;
+}
+
+/* Dense metric plots: full width */
+.metric-grid {
+  display: grid;
+
+  grid-template-columns: 1fr;
+
+  gap: 36px;
+
+  margin-bottom: 32px;
+}
+
+.plot-item {
+  min-width: 0;
+}
+
+.plot-wrapper {
+  position: relative;
+
+  width: 100%;
+
+  overflow: hidden;
+
+  border-radius: 8px;
+
+  background: #ffffff;
+}
+
+
+/* =========================================================
+   Plot iframes
+   ========================================================= */
+
+.plot-frame {
+  display: block;
+
+  width: 100%;
+  height: 430px;
+
+  border: 0;
+
+  background: #ffffff;
+}
+
+.metric-frame {
+  height: 550px;
+}
+
+.plot-title {
+  margin-top: 8px;
+
+  text-align: center;
+  font-weight: 500;
+}
+
+.plot-section-title {
+  text-align: center;
+}
+
+
+/* =========================================================
+   Plot expand button
+   ========================================================= */
+
+.plot-expand {
+  position: absolute;
+
+  top: 10px;
+  right: 10px;
+
+  z-index: 5;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 36px;
+  height: 36px;
+
+  padding: 0;
+
+  border: 0;
+  border-radius: 6px;
+
+  color: var(--text);
+
+  background:
+    rgba(255, 255, 255, 0.92);
+
+  box-shadow:
+    0 1px 5px rgba(0, 0, 0, 0.15);
+
+  font-size: 16px;
+
+  cursor: pointer;
+
+  transition:
+    background 0.15s ease,
+    transform 0.15s ease;
+}
+
+.plot-expand:hover {
+  background: #ffffff;
+  transform: scale(1.05);
+}
+
+
+/* =========================================================
+   Expanded Plot Dialog
+   ========================================================= */
+
+#plot-dialog {
+  width: 95vw;
+  height: 92vh;
+
+  max-width: none;
+  max-height: none;
+
+  padding: 0;
+
+  border: 0;
+  border-radius: 10px;
+
+  overflow: hidden;
+
+  background: #ffffff;
+}
+
+#plot-dialog::backdrop {
+  background:
+    rgba(0, 0, 0, 0.72);
+}
+
+.plot-dialog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  height: 48px;
+
+  padding: 0 16px;
+
+  border-bottom:
+    1px solid var(--line);
+
+  font-weight: 500;
+}
+
+.plot-dialog-header button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 36px;
+  height: 36px;
+
+  padding: 0;
+
+  border: 0;
+
+  color: var(--text);
+  background: none;
+
+  font-size: 22px;
+
+  cursor: pointer;
+}
+
+#plot-dialog-frame {
+  display: block;
+
+  width: 100%;
+  height: calc(100% - 48px);
+
+  border: 0;
+
+  background: #ffffff;
+}
+
+
+/* =========================================================
+   Footer
+   ========================================================= */
+
+footer {
+  padding: 36px 0;
+
+  border-top:
+    1px solid var(--line);
+
+  color: var(--muted);
+
+  font-size: 0.95rem;
+}
+
+
+/* =========================================================
+   Responsive
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+  .hero {
+    padding-top: 56px;
+  }
+
+  .section {
+    padding: 48px 0;
+  }
+
+  .video-grid,
+  .plot-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .plot-frame {
+    height: 420px;
+  }
+
+  .metric-frame {
+    height: 550px;
+  }
+
+  #plot-dialog {
+    width: 98vw;
+    height: 94vh;
+  }
+}
+
+
+@media (max-width: 480px) {
+
+  .container {
+    width: min(100% - 24px, 1100px);
+  }
+
+  .plot-frame {
+    height: 380px;
+  }
+
+  .metric-frame {
+    height: 520px;
+  }
+}
+
+.authors {
+  margin-bottom: 0.5rem;
+}
+
+.authors sup,
+.affiliations sup {
+  font-size: 0.7em;
+  vertical-align: super;
+}
+
+.affiliations {
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.affiliations span {
+  display: block;
+}
+
+.bibtex-section {
+  padding: 3rem 0;
+  background-color: #f8f9fa;
+}
+
+.bibtex-section h2 {
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.bibtex-section pre {
+  background-color: #eee;
+  padding: 1.5rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  text-align: left;
+  font-family: monospace;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.bibtex-section code {
+  white-space: pre;
+}
+
+html {
+  scroll-behavior: smooth;
+}
