@@ -1,0 +1,82 @@
+# Definition of the training components available for the training runs defined below.
+#
+# 
+# 'pipelines'(required): List of available training pipelines. Each entry must define a 'trainer_class', 'dataset_class' and 'evaluator_class'.
+#                        Path are relative to the 'dense_objects_nets.pipelines' module. 
+#
+# 'networks' (required): List of available network architectures.
+#                        'class' path is relative to the 'dense_objects_nets.networks' module.
+#                        'checkpoint_path' is optional and can be used to specify a pre-trained model and/or optimizer checkpoint to load weights from.
+#
+# 'datasets' (required): List of available dataset configurations. Each entry must define 'train', 'validation' and 'evaluation' config file paths.
+#                        Paths are relative to the 'config/dataset' folder.
+#
+# 'hparams_sweeps' (optional): List of hyper-parameters sweeps definitions.
+#                              Each entry must define one or more parameters to sweep over either by specifying an explicit list of values or a range.
+
+components:
+  pipelines:
+    descriptors_tracking_ntxent:
+      trainer_class: pixels_matching.ntxent.trainer.NTXentTrainer
+      dataset_class: pixels_matching.don_matches_dataset.DonPixelsMatchesDataset
+      evaluator_class: pixels_matching.ntxent.evaluator.NTXentEvaluator
+
+  networks:
+    don_network:
+      class: "don_descriptors_network.DonNetworkResNet50"
+      checkpoint_path: null
+      starting_epoch: 1
+
+  datasets:
+    tless_real:
+      train: train/tless_real.yml
+      validation: valid/tless_real.yml
+      evaluation: valid/tless_real.yml
+      dataset_transforms: [GeometricTransform, RandomizeBackground, ColorAugmentation] # (optional, default: null)
+
+  hparams_sweeps: # (optional)
+    temperature_sweep:
+      trainer/temperature: # Parameter to sweep over, must match a parameter in the run 'training_config' file. ('/' used to indicate nested parameters)
+        values: [0.1, 0.05] 
+        names: ["broad_match", "sharp_match"] # (optional names to tag each value)
+    lr_sweep:
+      network/optimizer/learning_rate:
+        min_value: 0.0001 
+        max_value: 0.0005
+        step: 0.00025
+        tag: "LR"
+      network/optimizer/weight_decay:
+        min_value: 1e-5 
+        max_value: 3e-5
+        step: 1e-5
+        tag: "WD"
+
+
+# ------------------------------------------------------------------------------ #
+
+
+# Definition of the training runs to execute.
+# Each entry in the 'training_runs' list defines a single training run.
+# Each training run must specify:
+# - 'run_name': name used to identify the training run and name the output folder.
+# - 'training_config': path to the training config file used for the run. Path is relative to the 'config/training' folder.
+# - 'components': specifies the components used for the training run. Using the keys defined in the 'components' section above.
+#
+# If a 'hparams_sweep' is specified under 'components' the training run will execute multiple training runs for each combination of the specified hyper-parameters values.
+# 
+
+training_runs:
+  - run_name: "don_training_tless_real"
+    training_config: descriptors_tracking/ntxent.yml
+    components:
+      pipeline: descriptors_tracking_ntxent
+      network: don_network
+      dataset: tless_real
+
+  - run_name: "don_training_tless_real_temp_sweep"
+    training_config: descriptors_tracking/ntxent.yml
+    components:
+      pipeline: descriptors_tracking_ntxent
+      network: don_network
+      dataset: tless_real
+      hparams_sweep: temperature_sweep

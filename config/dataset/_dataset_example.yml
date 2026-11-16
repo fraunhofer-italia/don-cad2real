@@ -1,0 +1,10 @@
+dataset_base_path: "${WS_DIR}/data/" # Base path to the dataset parent folder.
+dataset_type: SINGLE_OBJECT_SCENE_ONE_ID # One of SINGLE_OBJECT_SCENE_ONE_ID, SINGLE_OBJECT_SCENE_MULTIPLE_ID, MULTI_OBJECT_ONLY, MIXED, EVALUATION
+models_names: ${WS_DIR}/data/utils/models_names.yml # Path to the .yml file containing the object names and paths to their 3D models
+models_info: ${WS_DIR}/data/utils/models_info.json # (Optional) Path to the .json file containing additional information about the 3D models (assumed to be in BOP format)
+
+# List of folders containing the dataset scenes, assumed to be inside 'dataset_base_path'
+scenes:
+- obj1/2024-07-26-10-50-20
+- obj1/2024-07-26-10-53-22
+- # ...
